@@ -4,6 +4,7 @@
   <p>{{ msg }}</p>
   <button @click="clickHandler">点击+1</button>
   <Child></Child>
+  <HooksExample></HooksExample>
 </template>
 
 <script lang="ts">
@@ -83,7 +84,7 @@ import Child from "@/components/child.vue";
  * 是一个对象，里面有attrs对象（获取当前组件标签上的所有属性，但是该属性是在props中没有声明接收的），
  * emit方法（分发事件的）, slots对象（插槽）
  */
-
+import HooksExample from "@/components/HooksExample.vue";
 // 是Vue3的 composition API中2个最重要的响应式API
 // ref用来处理基本类型数据, reactive用来处理对象(递归深度响应式)
 // 如果用ref对象/数组, 内部会自动将对象/数组转换为reactive的代理对象
@@ -93,7 +94,8 @@ import Child from "@/components/child.vue";
 export default defineComponent({
   name: "Home",
   components: {
-    Child
+    Child,
+    HooksExample
   },
   beforeCreate() {
     console.log("beforeCreate执行了");

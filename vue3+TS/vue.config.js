@@ -3,9 +3,11 @@ const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const UglifyJsPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 console.log("process.env.NODE_ENV:" + process.env.VUE_APP_MODE);
+
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
+
 module.exports = {
   publicPath: "",
   outputDir: 'dist',
@@ -16,7 +18,9 @@ module.exports = {
   css: {
     extract: true,
     sourceMap: true,
-    // loaderOptions: {},
+    // loaderOptions: {
+    //   loader: "less-loader",
+    // },
     // requireModuleExtension: false
   },
   parallel: require('os').cpus().length > 1,
@@ -53,7 +57,8 @@ module.exports = {
     'postcss-pxtorem': {
       rootValue: 40,
       propList: ['*']
-    }
+    },
+
   },
   chainWebpack: config => {
     config.resolve.symlinks(true);

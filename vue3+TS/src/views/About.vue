@@ -53,7 +53,19 @@
  // console.log(proxyUser);
  // */
 import {defineComponent, reactive} from "vue";
+import {shallowReactive} from "../utils/shallowReactive";
 
+interface IUser {
+  name: string,
+  car: Array<string>
+}
+const proxyUser = shallowReactive<IUser>({
+  name: "小红",
+  car: ["audi"]
+});
+if (proxyUser) {
+  console.log("proxyUser", proxyUser);
+}
 export default defineComponent({
   name: "About",
   setup() {
@@ -68,7 +80,7 @@ export default defineComponent({
       }
     };
     const user = reactive<any>(obj);
-    console.log("user", user);
+    // console.log("user", user);
     const clickHandler = () => {
       user.gender = "男";
       user.wife.cars[0] = "卡迪拉克";
