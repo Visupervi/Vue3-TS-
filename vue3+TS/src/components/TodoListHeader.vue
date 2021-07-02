@@ -10,12 +10,13 @@ import {defineComponent, ref} from "vue";
 
 export default defineComponent({
   name: "TodoListHeader",
+  props: ["getData"],
   setup(props, {emit}) {
     const inputValue = ref("");
     const addHandler = () => {
-      emit("getData", inputValue.value);
+      props.getData(inputValue.value);
       inputValue.value = "";
-      console.log("12212121", inputValue.value);
+      // console.log("12212121", inputValue.value);
     };
     return {
       addHandler,
@@ -52,8 +53,9 @@ export default defineComponent({
     border-radius: 8px;
     align-items: center;
     justify-content: center;
-    &:hover{
-      cursor:pointer;
+
+    &:hover {
+      cursor: pointer;
     }
   }
 
