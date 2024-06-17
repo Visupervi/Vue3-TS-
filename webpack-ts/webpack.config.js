@@ -2,7 +2,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const isProd = process.env.NODE_ENV === "production";
-
+const MyPlugin1  = require("./src/plugin/MyPlugin1")
 function resolve(dir) {
   return path.resolve(__dirname, dir);
 }
@@ -49,6 +49,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new MyPlugin1(),
     new HtmlWebpackPlugin({
       template: "/public/index.html"
     }
