@@ -18,6 +18,7 @@ module.exports = {
     "space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
     quotes: [1,"double"],
     "comma-dangle": ["error", "never"],
-    "object-curly-spacing": ["error", "never"]
+    "@typescript-eslint/no-var-requires": "off",
+    "object-curly-spacing": ["error", "never"],
   }
 }

@@ -99,9 +99,16 @@ export default defineComponent({
   },
   beforeCreate() {
     console.log("beforeCreate执行了");
+    console.log("beforeCreate执行了");
+    const err2 = new Error("a is undefined!");
+    console.error(err2);
+    // const error = {message: 'this is error'};
+    // throw error;
   },
   setup() {
     console.log("setUp执行");
+    const err2 = new Error("a is undefined!");
+    console.error(err2);
     const msg = ref(0);
     const clickHandler = () => {
       msg.value++;

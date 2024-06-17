@@ -7,11 +7,11 @@
  * @Description 对fetch封装，包含get,post ajax的post请求
  */
 
-export const $fetch = async (url: string = "", data: any = {}, type: string = "GET", method: string = "fetch") => {
+export const $fetch = async (url = "", data: any = {}, type = "GET", method = "fetch") => {
   if (type.toLocaleLowerCase() === "get") {
     let str = "";
     Object.keys(data).map((item, index) => {
-      str += item + '=' + data[item] + '&';
+      str += item + "=" + data[item] + "&";
     });
     if (str !== "") {
       str = str.substr(0, str.lastIndexOf("&"));
@@ -20,20 +20,20 @@ export const $fetch = async (url: string = "", data: any = {}, type: string = "G
   }
 
   if (window.fetch && method === "fetch") {
-    let requestConfig: RequestInit = {
-      credentials: 'include',
+    const requestConfig: RequestInit = {
+      credentials: "include",
       method: type,
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       mode: "cors",
       cache: "force-cache"
     };
     if (type.toLocaleLowerCase() === "post") {
-      Object.defineProperty(requestConfig, 'body', {
+      Object.defineProperty(requestConfig, "body", {
         value: JSON.stringify(data)
-      })
+      });
     }
 
     try {
@@ -41,14 +41,14 @@ export const $fetch = async (url: string = "", data: any = {}, type: string = "G
       const response = await fetch(url, requestConfig);
       return await response.json();
     } catch (e) {
-      throw new Error(e)
+      throw new Error(e);
     }
   } else {
-    return new Promise(((resolve, reject) => {
-      let reqObj = !window.XMLHttpRequest ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
+    return new Promise((resolve, reject) => {
+      const reqObj = !window.XMLHttpRequest ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
       let sendData = "";
       if (type.toLowerCase() === "post") {
-        sendData = JSON.stringify(data)
+        sendData = JSON.stringify(data);
       }
       reqObj.open(type, url, true);
       reqObj.setRequestHeader("Content-type", "application/json");
@@ -57,13 +57,12 @@ export const $fetch = async (url: string = "", data: any = {}, type: string = "G
       reqObj.onreadystatechange = () => {
         if (reqObj.readyState === 4) {
           if (reqObj.status === 200) {
-            resolve(JSON.parse(reqObj.response))
+            resolve(JSON.parse(reqObj.response));
           }
         } else {
-          reject(reqObj.response)
+          reject(reqObj.response);
         }
-      }
-    }))
+      };
+    });
   }
-
-}
+};

@@ -1,29 +1,29 @@
-const path = require('path');
+const path = require("path");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
-const UglifyJsPlugin = require('terser-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require("terser-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 console.log("process.env.NODE_ENV:" + process.env.VUE_APP_MODE);
 
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, dir);
 }
 
 module.exports = {
   publicPath: "",
-  outputDir: 'dist',
-  assetsDir: 'assets',
+  outputDir: "dist",
+  assetsDir: "assets",
   lintOnSave: true,
   runtimeCompiler: false,
-  productionSourceMap: false,
+  productionSourceMap: true,
   css: {
     extract: true,
-    sourceMap: true,
+    sourceMap: true
     // loaderOptions: {
     //   loader: "less-loader",
     // },
     // requireModuleExtension: false
   },
-  parallel: require('os').cpus().length > 1,
+  parallel: require("os").cpus().length > 1,
   pwa: {},
   devServer: {
     hot: process.env.VUE_APP_MODE === "development",
@@ -38,7 +38,7 @@ module.exports = {
     // host: "127.0.0.1",
     port: 9988,
     https: false,
-    open: true,
+    open: true
     // proxy: {
     //   '/': {
     //     target: 'http://106.54.156.68:5015',
@@ -51,21 +51,21 @@ module.exports = {
     // }
   },
   pluginOptions: {
-    'autoprefixer': {
-      browsers: ['Android >= 4.0', 'iOS >= 7']
+    autoprefixer: {
+      browsers: ["Android >= 4.0", "iOS >= 7"]
     },
-    'postcss-pxtorem': {
+    "postcss-pxtorem": {
       rootValue: 40,
-      propList: ['*']
-    },
+      propList: ["*"]
+    }
 
   },
   chainWebpack: config => {
     config.resolve.symlinks(true);
-    config.output.filename('[name].[hash:8].js').end();
-    //修复 Lazy loading routes Error
-    config.plugin('html').tap(args => {
-      args[0].chunksSortMode = 'none';
+    config.output.filename("[name].[hash:8].js").end();
+    // 修复 Lazy loading routes Error
+    config.plugin("html").tap(args => {
+      args[0].chunksSortMode = "none";
       return args;
     });
     // 开启图片压缩
@@ -85,41 +85,41 @@ module.exports = {
     // }
   },
   configureWebpack: config => {
-    if (process.env.VUE_APP_MODE === 'production') {
-      const plugins = []
+    if (process.env.VUE_APP_MODE === "production") {
+      const plugins = [];
       plugins.push(
         new UglifyJsPlugin({
           terserOptions: {
             compress: {
               // warnings: true,
-              drop_console: true,
+              drop_console: false,
               drop_debugger: true,
-              pure_funcs: ['console.log'] //移除console
+              pure_funcs: ["console.log"] // 移除console
             },
             mangle: false,
             output: {
-              beautify: true,//压缩注释
+              beautify: true // 压缩注释
             }
           },
-          parallel: true,
+          parallel: true
         })
       );
       plugins.push(
         new CompressionWebpackPlugin({
-          filename: '[path].gz[query]',
-          algorithm: 'gzip',
+          filename: "[path].gz[query]",
+          algorithm: "gzip",
           test: /\.js$|\.html$|\.css$/,
           threshold: 10240,
           minRatio: 0.8
         })
       );
-      config.plugins = [...config.plugins, ...plugins]
+      config.plugins = [...config.plugins, ...plugins];
     }
     // 打包分析
     if (process.env.IS_ANALYZ) {
-      config.plugin('webpack-report')
+      config.plugin("webpack-report")
         .use(BundleAnalyzerPlugin, [{
-          analyzerMode: 'assets',
+          analyzerMode: "assets"
         }]);
     }
   }

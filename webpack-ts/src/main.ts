@@ -6,4 +6,5 @@
 // import "./functionExample"
 // import "./type.d"
 import "./内置对象"
+import "./index.js"
 document.querySelector("#app").innerHTML="Hello World </br> Webpack </br> typescript"
