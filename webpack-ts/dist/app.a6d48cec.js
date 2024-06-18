@@ -1,0 +1,2 @@
+(()=>{var e={272:()=>{new Boolean(!0),new Number(1),new String("123"),new Date,new Error("12312313")},682:()=>{console.log("test loader 1111")}},r={};function o(t){var n=r[t];if(void 0!==n)return n.exports;var p=r[t]={exports:{}};return e[t](p,p.exports,o),p.exports}(()=>{"use strict";o(272),o(682),document.querySelector("#app").innerHTML="Hello World </br> Webpack </br> typescript"})()})();
+//# sourceMappingURL=app.a6d48cec.js.map

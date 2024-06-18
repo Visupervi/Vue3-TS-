@@ -13,7 +13,7 @@ module.exports = function (content, map, meta) {
     name: "myBabelLoader"
   });
   // 创建异步
-  const callback = this.async()
+  const callback = this.async();
 
   // 使用babel去编译
   transfrom(content, options)

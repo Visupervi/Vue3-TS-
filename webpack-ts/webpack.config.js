@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const isProd = process.env.NODE_ENV === "production";
 const MyPlugin1  = require("./src/plugin/MyPlugin1")
+const CopyPlugin  = require("./src/plugin/CopyPlugin")
 function resolve(dir) {
   return path.resolve(__dirname, dir);
 }
@@ -50,6 +51,10 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new MyPlugin1(),
+    new CopyPlugin({
+      from: "public/*",
+      ignore: ["**/index.html"]
+    }),
     new HtmlWebpackPlugin({
       template: "/public/index.html"
     }
