@@ -1,0 +1,22 @@
+{
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./script/build.js",
+    "debug": "node --inspect-brk ./script/build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/parser": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/traverse": "^7.24.7"
+  }
+}

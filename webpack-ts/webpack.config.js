@@ -53,6 +53,7 @@ module.exports = {
     new MyPlugin1(),
     new CopyPlugin({
       from: "public/*",
+      to: "css/*",
       ignore: ["**/index.html"]
     }),
     new HtmlWebpackPlugin({

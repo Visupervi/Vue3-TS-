@@ -24,16 +24,12 @@ class CopyPlugin {
         // context就是webpack的配置
         // 运行指令的目录
         const context = compiler.options.context
-
         // console.log("context", context)
         // 将输入路径变成绝对路径
         const absolutePath = path.isAbsolute(from) ? from : path.resolve(context, from)
-
-
         // globby要处理的文件夹
         const paths = await globby([absolutePath], { ignore })
         // console.log("tototototo", to)
-
         // 读取path中的content
         // map遇到async 并不会等待，所以加一个Promise.all去处理，利用的就是map方法返回的事一个数组，
         const files = await Promise.all(
@@ -42,14 +38,13 @@ class CopyPlugin {
             // console.log('ietm', item)
             const data = await readFile(item);
             // 获取文件名称，获取最后的文件名称
-            const filename = path.basename(item);
+            const filename = path.join(to, path.basename(item));
             return {
               data,
               filename
             }
           })
         )
-
         const assets = files.map(file => {
           const source = new RawSource(file.data);
           return {
