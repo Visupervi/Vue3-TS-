@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  function Fn() {
+
+  }
+
+  console.log(Fn.prototype)
+  // 回调函数
+  // 同步回调函数，立即执行
+  // 异步回调函数，不会立即执行
+
+
+  function fun(callback) {
+    callback()
+  }
+
+  function funAsync(cb) {
+    setTimeout(() => {
+      cb()
+    }, 1000)
+  }
+  const arr = [1, 2, 3, 4, 5]
+  let p = new Promise((resolve, reject) => { // 执行器函数，同步执行
+    // resolve(res => {
+    console.log("promise")
+    // resolve()
+
+    // setTimeout(() => {
+    const time = Date.now()
+    if (time % 2 === 0) {
+      resolve("执行成功，time=" + time);
+    } else {
+      reject("执行失败，time=" + time);
+    }
+    // }, 1500)
+    // })
+  })
+  // Promise.resolve(res => {
+  // console.log("res")
+  // })
+  // arr.forEach(item => {
+  //   console.log('item=', item)
+  // })
+
+  // console.log("foreach之后")
+
+
+  p.then(
+    value => {
+      console.log("成功的回调\n", value)
+      return new Promise(() => {})
+    },
+    reason => {
+      console.log("失败的回调\n", reason)
+    })
+    .then(
+      value => {
+        console.log("成功的回调1\n", value)
+      },
+      reason => {
+        console.log("失败的回调1\n", reason)
+      }
+    )
+
+  // setTimeout(() => {
+  console.log("setTimeout")
+  // }, 0)
+</script>
+
+</html>
