@@ -24,12 +24,6 @@ class Compiler {
         this.modules.push(fileInfo);
       }
     })
-    // console.log("ast", ast)
-    // console.log("deps", deps)
-    // console.log("code", code)
-    // console.log("ast", ast)
-
-    // console.log("this.module", this.modules);
     const graphs = this.modules.reduce((graph, module) => {
       return {
         ...graph,
@@ -41,9 +35,6 @@ class Compiler {
     }, {})
 
     this.generate(graphs);
-    // console.log("graphs", graphs)
-
-    // this.generate()
   }
 
   build(filePath) {
@@ -76,7 +67,7 @@ class Compiler {
       require('${this.options.entry}')
     })(${JSON.stringify(graph)})`
 
-    const filePath = path.resolve(this.options.output.path, this.options.output.filename)
+    const filePath = path.resolve(this.options.output.path, this.options.output.filename);
     fs.writeFileSync(filePath, bundle, 'utf-8')
   }
 }

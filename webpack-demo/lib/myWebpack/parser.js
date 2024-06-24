@@ -14,7 +14,6 @@ module.exports = parser = {
     return ast;
   },
   // 获取依赖
-
   getDeps(filePath, ast) {
     // 获取到文件夹的路径
     const dirName = path.dirname(filePath);
@@ -25,7 +24,6 @@ module.exports = parser = {
       // 定义识别语法
       ImportDeclaration({ node }) {
         // 文件的相对路径
-        debugger
         const relativePath = node.source.value;
         // 生成基于入口文件的相对路径
         const absolutePath = path.resolve(dirName, relativePath);
@@ -38,7 +36,6 @@ module.exports = parser = {
   },
 
   // 将ast解析成code
-
   getCode(ast) {
     // 编译代码
     const { code } = transformFromAst(ast, null, {
