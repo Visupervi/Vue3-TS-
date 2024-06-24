@@ -99,12 +99,19 @@
 
     // Promise 的原型对象方法then,指定成功或者失败的回调函数
     // 返回一个promise
+    // 返回的promise的结果由onResolved/onRejected决定
     Promise.prototype.then = function (onResolved, onRejected) {
-      onResolved = typeof onResolved === "function" ? onResolved : value => value // 实现异常穿透
+      onResolved = typeof onResolved === "function" ? onResolved : value => value
       onRejected = typeof onRejected === "function" ? onRejected : reason => { throw reason } // 实现异常穿透
       const self = this
       // 返回一个新的promise
       return new Promise((resolve, reject) => {
+        /**
+         * handle
+         * @param {*} callback 
+         * 指定回调函数
+         * 根据执行的结果改变return的promise的状态/数据
+         */
 
         function handle(callback) {
           // 如果抛出异常，reason是err
@@ -130,7 +137,7 @@
         if (self.status === PENDING) {
           self.callbacks.push(
             {
-              // 不能直接传onResolved， 因为要修改新的promise的状态，若果直接传就没办法修改新的promise的值了
+              // 不能直接传onResolved，因为要修改新的promise的状态，若果直接传就没办法修改新的promise的值了
               onResolved(value) {
                 handle(onResolved)
               },
@@ -199,20 +206,84 @@
 
     // Promise函数对象的resolve方法
     // 返回一个成功指定结果的promise
-    Promise.resolve = function (value) { }
+    Promise.resolve = function (value) {
+      return new Promise((resolve, reject) => {
+        if (value instanceof Promise) {
+          value.then(resolve, reject)
+        } else {
+          resolve(value)
+        }
+      })
+    }
+
 
     // Promise函数对象的reject方法
     // 返回一个失败指定结果的promise
-    Promise.reject = function (reason) { }
+    Promise.reject = function (reason) {
+      return new Promise((resolve, reject) => {
+        reject(reason)
+      })
+    }
 
     // Promise函数对象的all方法
     // 返回一个promise，只有当所有promise成功才成功
     // 否则只要有一个失败就失败
-    Promise.all = function (promises) { }
+    Promise.all = function (promises) {
+      const values = new Array(promises.length) // 用来保存所有成功value的数组
+      let acc = 0
+      return new Promise((resolve, reject) => {
+        promises.forEach((promise, index) => {
+          Promise.resolve(promise).then(
+            value => {
+              acc++
+              values[index] = value
+              if (acc === promises.length) {
+                resolve(values)
+              }
+            },
+            reason => {
+              reject(reason)
+            }
+          )
+        })
+      })
+    }
 
     // Promise函数对象的race方法
     // 返回一个promise，其结果由第一个决定
-    Promise.race = function (promises) { }
+    Promise.race = function (promises) {
+      return new Promise((resolve, reject) => {
+        promises.forEach((promise, index) => {
+          promise.then(
+            value => {
+              resolve(value)
+            },
+            reason => {
+              reject(reason)
+            }
+          )
+        })
+      })
+    }
+
+    Promise.resolveDelay = function (value, delay) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (value instanceof Promise) {
+            value.then(resolve, reject)
+          } else {
+            resolve(value)
+          }
+        }, delay)
+      })
+    }
+    Promise.rejectDelay = function (reason, delay) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(reason)
+        }, delay)
+      })
+    }
     window.Promise = Promise
   }
 )(window)
