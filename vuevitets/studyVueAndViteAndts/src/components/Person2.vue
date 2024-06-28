@@ -2,19 +2,31 @@
   <div class="person">
     求和：{{ sum }}
     <button @click="addHandle">累加</button>
+
+    <h1>中国</h1>
+    <h2 ref="city">上海</h2>
+    <h3>浦东</h3>
   </div>
 </template>
 
 <script lang="ts" setup name="Person">
-import { ref, computed, watch, reactive, watchEffect } from "vue"
+import { ref, computed, watch, reactive, watchEffect, onMounted,defineExpose } from "vue"
+const city = ref(null) // 这里和react的useRef是一样的
 
+onMounted(() => {
+  // child.value 是 <Child /> 组件的实例
+
+  console.log("city", city.value)
+})
 let sum = ref(0)
 const addHandle = () => {
   sum.value += 1
 }
 
 
-
+console.log()
+// watchEffect会立即执行
+// 监听响应式数据
 
 watchEffect(()=> {
   if(sum.value > 20) {
@@ -22,7 +34,8 @@ watchEffect(()=> {
   }
 })
 
-
+// 子传给父
+defineExpose({sum})
 // 监听reactive数据
 // watch(
 //   () => ({ ...person }),
