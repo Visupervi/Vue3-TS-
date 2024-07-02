@@ -1,5 +1,5 @@
 import { ref, onMounted } from "vue"
-import axios from "axios";
+import axios from "axios"
 export default function () {
   let dogList = ref([
     "https://images.dog.ceo/breeds/pembroke/n02113023_5032.jpg"
