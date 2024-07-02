@@ -13,7 +13,7 @@
 import {ref, defineEmits, onMounted} from "vue"
 import { v7 as uuidv7 } from 'uuid'
 import useTalk from "@/hooks/useTalk";
-import { useMessageStore } from '@/store/Message';
+import { useMessageStore } from '@/store/Message'
 let uuid = ref(uuidv7())
 // https://api.uomg.com/api/rand.qinghua?format=json
 
